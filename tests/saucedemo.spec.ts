@@ -57,6 +57,11 @@ test.describe("Automated Tests", () => {
     await page.getByRole("textbox", { name: "Password " }).fill("secret_sauce");
     await page.getByRole("button", { name: "Login" }).click();
 
+    // Add one specific product (Sauce Labs Fleece Jacket) to the shopping cart.
+    await page
+      .locator("data-test=add-to-cart-sauce-labs-fleece-jacket")
+      .click();
+
     // In the Shopping cart page, proceed to the checkout page.
     await page.locator('[data-test="shopping-cart-link"]').click();
     await page.locator('[data-test="checkout"]').click();
@@ -68,6 +73,8 @@ test.describe("Automated Tests", () => {
     await page.getByRole("button", { name: "Continue" }).click();
 
     // Verify that the changes are reflected on the shipping information form page.
+    const cartItem = await page.locator(".cart_item").textContent();
+    expect(cartItem).toContain("Sauce Labs Fleece Jacket");
 
     // Complete the purchase process and verify that the order is successful.
     await page.getByRole("button", { name: "Finish" }).click();
