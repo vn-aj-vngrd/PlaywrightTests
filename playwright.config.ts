@@ -29,6 +29,18 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+
+    headless: true,
+
+    /* Enable video recording. See https://playwright.dev/docs/api/class-testoptions#testoptions-video */
+    video: {
+      mode: 'on',
+    },
+
+    /* Enable screenshots. See https://playwright.dev/docs/api/class-testoptions#testoptions-screenshot */
+    screenshot: {
+      mode: 'on',
+    }
   },
 
   /* Configure projects for major browsers */
