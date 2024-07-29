@@ -1,8 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-test.describe("Automation Tests", () => {
-  test.beforeEach(async ({ page }) => {});
-
+test.describe("Automated Tests", () => {
   // Test Case 1: Login Page
   test("Login Page", async ({ page }) => {
     // Open the web application
@@ -22,7 +20,6 @@ test.describe("Automation Tests", () => {
   });
 
   // Test Case 2: Adding Products
-
   test("Adding Products", async ({ page }) => {
     // Open the web application
     await page.goto("https://www.saucedemo.com/");
@@ -51,5 +48,30 @@ test.describe("Automation Tests", () => {
   });
 
   // Test Case 3: Checkout Page
-  test("Checkout Page", async ({ page }) => {});
+  test("Checkout Page", async ({ page }) => {
+    // Open the web application
+    await page.goto("https://www.saucedemo.com/");
+
+    // Enter valid credentials and click the login button.
+    await page.getByRole("textbox", { name: "Username" }).fill("standard_user");
+    await page.getByRole("textbox", { name: "Password " }).fill("secret_sauce");
+    await page.getByRole("button", { name: "Login" }).click();
+
+    // In the Shopping cart page, proceed to the checkout page.
+    await page.locator('[data-test="shopping-cart-link"]').click();
+    await page.locator('[data-test="checkout"]').click();
+
+    // Fill out the shipping information form
+    await page.getByRole("textbox", { name: "First Name" }).fill("John");
+    await page.getByRole("textbox", { name: "Last Name" }).fill("Doe");
+    await page.getByRole("textbox", { name: "Zip/Postal Code" }).fill("12345");
+    await page.getByRole("button", { name: "Continue" }).click();
+
+    // Verify that the changes are reflected on the shipping information form page.
+
+    // Complete the purchase process and verify that the order is successful.
+    await page.getByRole("button", { name: "Finish" }).click();
+    const header = await page.locator("h2").textContent();
+    expect(header).toBe("Thank you for your order!");
+  });
 });
