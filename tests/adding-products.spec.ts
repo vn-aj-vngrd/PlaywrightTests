@@ -4,8 +4,8 @@ const BASE_URL = "https://www.saucedemo.com/";
 const USERNAME = "standard_user";
 const PASSWORD = "secret_sauce";
 
-test.describe("Test Case 2: Adding Products", () => {
-  test("Test Case 2.1: Add Products to the Cart", async ({ page }) => {
+test.describe("Adding Products", () => {
+  test("should add 2 products to the cart", async ({ page }) => {
     // Open the web application
     await page.goto(BASE_URL);
 

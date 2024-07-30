@@ -7,8 +7,8 @@ const CREDENTIALS = [
   { username: "problem_user", password: "secret_sauce" },
 ];
 
-test.describe("Test Case 1: Login Page", () => {
-  test("Test Case 1.1: Successful Login", async ({ page }) => {
+test.describe("Login Page", () => {
+  test("should login to the application successfully", async ({ page }) => {
     // Open the web application
     await page.goto(BASE_URL);
 
@@ -29,7 +29,9 @@ test.describe("Test Case 1: Login Page", () => {
     expect(title).toBe("Products");
   });
 
-  test("Test Case 1.2: Unsuccessful Login", async ({ page }) => {
+  test("should display an error message when logging in with invalid credentials", async ({
+    page,
+  }) => {
     // Open the web application
     await page.goto(BASE_URL);
 
