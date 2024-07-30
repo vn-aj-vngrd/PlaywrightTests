@@ -53,4 +53,24 @@ test.describe("Login Page", () => {
       "Epic sadface: Sorry, this user has been locked out."
     );
   });
+
+  test("should display an error message when logging in with an empty password", async ({
+    page,
+  }) => {
+    // Open the web application
+    await page.goto(BASE_URL);
+
+    // Verify that the login page is displayed.
+    expect(await page.title()).toBe("Swag Labs");
+
+    // Enter valid username and empty password, then click the login button.
+    await page
+      .getByRole("textbox", { name: "Username" })
+      .fill(CREDENTIALS[2].username);
+    await page.getByRole("button", { name: "Login" }).click();
+
+    // Verify that the error message is displayed.
+    const errorMessage = await page.locator("data-test=error").textContent();
+    expect(errorMessage).toBe("Epic sadface: Password is required");
+  });
 });
