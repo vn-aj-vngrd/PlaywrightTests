@@ -1,17 +1,21 @@
 import { test, expect } from "@playwright/test";
 
-test.describe("Automated Tests", () => {
+const BASE_URL = "https://www.saucedemo.com/";
+const USERNAME = "standard_user";
+const PASSWORD = "secret_sauce";
+
+test.describe("Automated Tests for saucedemo.com", () => {
   // Test Case 1: Login Page
   test("Login Page", async ({ page }) => {
     // Open the web application
-    await page.goto("https://www.saucedemo.com/");
+    await page.goto(BASE_URL);
 
     // Verify that the login page is displayed.
     expect(await page.title()).toBe("Swag Labs");
 
     // Enter valid credentials and click the login button.
-    await page.getByRole("textbox", { name: "Username" }).fill("standard_user");
-    await page.getByRole("textbox", { name: "Password " }).fill("secret_sauce");
+    await page.getByRole("textbox", { name: "Username" }).fill(USERNAME);
+    await page.getByRole("textbox", { name: "Password " }).fill(PASSWORD);
     await page.getByRole("button", { name: "Login" }).click();
 
     // Verify that the Home/Products page is displayed after successful login.
@@ -22,11 +26,11 @@ test.describe("Automated Tests", () => {
   // Test Case 2: Adding Products
   test("Adding Products", async ({ page }) => {
     // Open the web application
-    await page.goto("https://www.saucedemo.com/");
+    await page.goto(BASE_URL);
 
     // Enter valid credentials and click the login button.
-    await page.getByRole("textbox", { name: "Username" }).fill("standard_user");
-    await page.getByRole("textbox", { name: "Password " }).fill("secret_sauce");
+    await page.getByRole("textbox", { name: "Username" }).fill(USERNAME);
+    await page.getByRole("textbox", { name: "Password " }).fill(PASSWORD);
     await page.getByRole("button", { name: "Login" }).click();
 
     // Add one specific product (Sauce Labs Fleece Jacket) to the shopping cart.
@@ -50,11 +54,11 @@ test.describe("Automated Tests", () => {
   // Test Case 3: Checkout Page
   test("Checkout Page", async ({ page }) => {
     // Open the web application
-    await page.goto("https://www.saucedemo.com/");
+    await page.goto(BASE_URL);
 
     // Enter valid credentials and click the login button.
-    await page.getByRole("textbox", { name: "Username" }).fill("standard_user");
-    await page.getByRole("textbox", { name: "Password " }).fill("secret_sauce");
+    await page.getByRole("textbox", { name: "Username" }).fill(USERNAME);
+    await page.getByRole("textbox", { name: "Password " }).fill(PASSWORD);
     await page.getByRole("button", { name: "Login" }).click();
 
     // Add one specific product (Sauce Labs Fleece Jacket) to the shopping cart.
@@ -67,9 +71,22 @@ test.describe("Automated Tests", () => {
     await page.locator('[data-test="checkout"]').click();
 
     // Fill out the shipping information form
-    await page.getByRole("textbox", { name: "First Name" }).fill("John");
-    await page.getByRole("textbox", { name: "Last Name" }).fill("Doe");
-    await page.getByRole("textbox", { name: "Zip/Postal Code" }).fill("12345");
+    const shippingInfo = {
+      firstName: "Juan",
+      lastName: "Dela Cruz",
+      postalCode: "5000",
+    };
+
+    await page
+      .getByRole("textbox", { name: "First Name" })
+      .fill(shippingInfo.firstName);
+    await page
+      .getByRole("textbox", { name: "Last Name" })
+      .fill(shippingInfo.lastName);
+    await page
+      .getByRole("textbox", { name: "Zip/Postal Code" })
+      .fill(shippingInfo.postalCode);
+
     await page.getByRole("button", { name: "Continue" }).click();
 
     // Verify that the changes are reflected on the shipping information form page.
